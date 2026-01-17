@@ -1,6 +1,5 @@
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import Logo from "../atoms/logo";
+import LogoLg from "../atoms/logo-lg";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -17,7 +16,7 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
           <div className="absolute inset-0 bg-linear-to-b from-black/20 to-black/40 z-10" />
 
 
-          <Logo width={200} height={200} className="h-[200px]" />
+          <LogoLg width={200} height={200} className="h-[200px]" />
         </div>
       </div>
 

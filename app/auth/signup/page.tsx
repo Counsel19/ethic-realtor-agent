@@ -7,16 +7,18 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [formData, setFormData] = useState({
+    fullName: "",
     email: "",
+    phoneNumber: "",
     password: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login:", formData);
+    // Handle signup logic here
+    console.log("Signup:", formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,13 +32,33 @@ export default function LoginPage() {
     <AuthLayout>
       <div className="space-y-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-foreground">Welcome Back</h1>
+          <h1 className="text-3xl font-bold text-foreground">
+            Your pathway to home begins with integrity.
+          </h1>
           <p className="text-muted-foreground">
-            Enter your details to log in
+            Enter your details to create an account
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label
+              htmlFor="fullName"
+              className="text-sm font-medium text-foreground"
+            >
+              Full Name
+            </label>
+            <Input
+              id="fullName"
+              name="fullName"
+              type="text"
+              placeholder="Enter your full name"
+              value={formData.fullName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -56,20 +78,30 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="text-sm font-medium text-foreground"
-              >
-                Password
-              </label>
-              <Link
-                href="/auth/forget-password"
-                className="text-sm text-muted-foreground hover:text-foreground hover:underline"
-              >
-                Forgot password?
-              </Link>
-            </div>
+            <label
+              htmlFor="phoneNumber"
+              className="text-sm font-medium text-foreground"
+            >
+              Phone Number
+            </label>
+            <Input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="tel"
+              placeholder="Enter your phone number"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium text-foreground"
+            >
+              Password
+            </label>
             <PasswordInput
               id="password"
               name="password"
@@ -80,18 +112,23 @@ export default function LoginPage() {
             />
           </div>
 
-          <Button type="submit" className="w-full h-11 text-base" size="lg">
-            Log in
+          <Button
+            type="submit"
+            variant="secondary"
+            className="w-full h-11 text-base"
+            size="lg"
+          >
+            Create account
           </Button>
         </form>
 
         <p className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/auth/signup"
+            href="/auth/login"
             className="font-semibold text-foreground hover:underline"
           >
-            Create account
+            Log in
           </Link>
         </p>
       </div>

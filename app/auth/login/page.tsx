@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface LoginFormValues {
     email: string;
@@ -29,6 +30,7 @@ const initialValues: LoginFormValues = {
 };
 
 export default function LoginPage() {
+    const router = useRouter();
     const handleSubmit = async (
         values: LoginFormValues,
         { setSubmitting }: FormikHelpers<LoginFormValues>
@@ -40,9 +42,8 @@ export default function LoginPage() {
             // Here you would typically make an API call
             // For now, just navigate to dashboard
             console.log("Validation passed, navigating to dashboard...");
-            
-            // Use window.location for reliable navigation
-            window.location.href = "/dashboard";
+
+            router.push("/dashboard");
         } catch (error) {
             console.error("Login error:", error);
         } finally {

@@ -19,23 +19,27 @@ export function InstallPrompt() {
   useEffect(() => {
     // Check if app is already installed
     if (window.matchMedia("(display-mode: standalone)").matches) {
+      console.log("[PWA] App is already installed (standalone mode)");
       setIsInstalled(true);
       return;
     }
 
     // Check if app was installed before
     if (localStorage.getItem("pwa-installed") === "true") {
+      console.log("[PWA] App was previously installed");
       setIsInstalled(true);
       return;
     }
 
     // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
+      console.log("[PWA] beforeinstallprompt event fired");
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       // Show prompt after a delay (better UX)
       setTimeout(() => {
         setShowPrompt(true);
+        console.log("[PWA] Showing install prompt");
       }, 3000);
     };
 
@@ -46,10 +50,24 @@ export function InstallPrompt() {
 
     // Check if app was just installed
     window.addEventListener("appinstalled", () => {
+      console.log("[PWA] App was installed");
       setIsInstalled(true);
       setShowPrompt(false);
       localStorage.setItem("pwa-installed", "true");
     });
+
+    // Log if event doesn't fire (for debugging)
+    setTimeout(() => {
+      if (!deferredPrompt) {
+        console.warn("[PWA] beforeinstallprompt event not fired");
+        console.warn("[PWA] Possible reasons:");
+        console.warn("  1. Not on HTTPS (required for PWA)");
+        console.warn("  2. Manifest.json not accessible");
+        console.warn("  3. Icons not correct size");
+        console.warn("  4. App already installed");
+        console.warn("  5. Browser doesn't support PWA");
+      }
+    }, 5000);
 
     return () => {
       window.removeEventListener(

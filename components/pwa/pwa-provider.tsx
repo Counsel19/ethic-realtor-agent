@@ -33,21 +33,34 @@ export function PWAProvider({ children }: { children: React.ReactNode }) {
           });
         }
       } else {
-        // Only register in production
-        window.addEventListener("load", () => {
+        // Register in production
+        const registerServiceWorker = () => {
           navigator.serviceWorker
-            .register("/sw.js")
+            .register("/sw.js", { scope: "/" })
             .then((registration) => {
               console.log(
                 "[PWA] Service Worker registered:",
                 registration.scope
               );
+              // Check for updates
               registration.update();
+              
+              // Check if update is available
+              registration.addEventListener("updatefound", () => {
+                console.log("[PWA] Service Worker update found");
+              });
             })
             .catch((error) => {
               console.error("[PWA] Service Worker registration failed:", error);
             });
-        });
+        };
+
+        // Register immediately if page is already loaded
+        if (document.readyState === "complete") {
+          registerServiceWorker();
+        } else {
+          window.addEventListener("load", registerServiceWorker);
+        }
       }
     }
   }, []);

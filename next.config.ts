@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
             key: "Service-Worker-Allowed",
             value: "/",
           },
+          {
+            key: "Content-Type",
+            value: "application/javascript",
+          },
         ],
       },
       {
@@ -24,6 +28,10 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
+          },
+          {
+            key: "Content-Type",
+            value: "application/manifest+json",
           },
         ],
       },
